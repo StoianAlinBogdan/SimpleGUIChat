@@ -11,6 +11,7 @@ def accept_connections(sock: socket.socket):
 def communicate(conn, addr):
     while True:
         data = conn.recv(1024)
+        # TODO: If data == "!EXIT", remove from connections 
         for connection in connections:
             connection[0].sendall(bytes(str(data), encoding="ascii"))
 

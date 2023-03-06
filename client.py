@@ -1,5 +1,6 @@
 import socket
 import threading
+from interface import _VARS, main_loop
 
 def send(sock: socket.socket):
     while True:
@@ -22,4 +23,4 @@ if __name__ == "__main__":
     sock.connect(("localhost", 5678))
     threading.Thread(target=send, args=(sock,)).start()
     threading.Thread(target=receive, args=(sock,)).start()
-    
+    threading.Thread(target=main_loop).start()
