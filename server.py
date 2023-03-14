@@ -2,6 +2,7 @@ import socket
 import threading
 
 connections = []
+usernames = []
 
 def accept_connections(sock: socket.socket):
     while True:
@@ -13,6 +14,12 @@ def communicate(conn, addr):
     try:
         while True:
             data = conn.recv(1024)
+            if "USERNAME" in str(data):
+                usernames.append(str(data).split(":")[1].split("\'")[0])
+                print(usernames)
+                for connection in connections:
+                    connection[0].sendall(bytes(str("USERNAMES:") + str(usernames), encoding="ascii"))
+                    continue
             for connection in connections:
                 connection[0].sendall(bytes(str(data), encoding="ascii"))
     except socket.error as e:
