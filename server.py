@@ -21,12 +21,16 @@ def communicate(conn, addr):
                     connection[0].sendall(bytes(str("USERNAMES:") + str(usernames), encoding="ascii"))
                     continue
             for connection in connections:
-                connection[0].sendall(bytes(str(data), encoding="ascii"))
+                if connection[0] == conn:
+                    user = str(usernames[connections.index(connection)])
+            for connection in connections:
+                connection[0].sendall(bytes(user + ": " + str(data), encoding="ascii"))
     except socket.error as e:
         print(e)
         for connection in connections:
             if connection[1] == addr:
                 connections.pop(connections.index(connection))
+                # TODO: remove the fucking user from userlist too lol
 
 
 if __name__ == "__main__":

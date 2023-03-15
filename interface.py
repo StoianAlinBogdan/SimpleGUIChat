@@ -18,8 +18,9 @@ def main_loop():
     _VARS["window"].disable()
     _VARS["login_window"] = make_login_window()
     while True:
-        event, values = _VARS['window'].read(timeout=100)
-        event2, values2 = _VARS["login_window"].read(timeout=100)
+        event, values = _VARS['window'].read(timeout=500)
+        if _VARS["login_window"]:
+            event2, values2 = _VARS["login_window"].read(timeout=500)
         print(event)
         print(values)
         if event == sg.WIN_CLOSED or event == 'Exit':
